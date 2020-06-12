@@ -10,7 +10,7 @@
 
 " Zeal's executable location {{{1
 if !exists('g:zv_zeal_executable')
-    let g:zv_zeal_executable = has('unix') && executable('zeal')
+    let g:zv_zeal_executable = has('unix') || executable('zeal')
                 \ ? 'zeal'
                 \ : $ProgramFiles . '\Zeal\zeal.exe'
 endif
