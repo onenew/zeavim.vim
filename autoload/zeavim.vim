@@ -209,7 +209,7 @@ function! s:Zeal(docset, query) abort " {{{1
     let l:docset = !empty(l:docset) ? l:docset[0:-2] . ':' : ''
     let l:query = !empty(a:query) ? escape(a:query, '#%') : ''
 
-    let l:cmd = has('unix') ? [''] : ['start']
+    let l:cmd = has('unix') ? [''] : ['start /b "" ']
     call add(l:cmd, shellescape(g:zv_zeal_executable))
     call add(l:cmd, g:zv_zeal_args)
     call add(l:cmd, shellescape(l:docset . l:query))
@@ -217,6 +217,7 @@ function! s:Zeal(docset, query) abort " {{{1
     if g:zv_keep_focus && has('unix') && executable('wmctrl') && v:windowid !=# 0
         call add(l:cmd, printf('&& wmctrl -ia %s %s', v:windowid, s:black_hole))
     endif
+    " let @* = '!' . join(filter(copy(l:cmd), '!empty(v:val)')) . ' &'
     silent execute '!' . join(filter(copy(l:cmd), '!empty(v:val)')) . ' &'
     redraw!
 endfunction
